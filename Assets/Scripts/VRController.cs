@@ -2,13 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Valve.VR;
 
 public class VRController : MonoBehaviour
 {
     private Collider collider;
 
+    public SteamVR_Action_Boolean spawn = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("InteractUI");
+    SteamVR_Behaviour_Pose trackedObj;
+
     private List<VRObject> VRObjectCollidingList = new List<VRObject>();
     private VRObject grippedObject = null;
+
+    private void Awake()
+    {
+        trackedObj = GetComponent<SteamVR_Behaviour_Pose>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +29,18 @@ public class VRController : MonoBehaviour
         }
 
         gameObject.layer = 8;
+    }
+
+    private void FixedUpdate()
+    {
+        if (spawn.GetStateDown(trackedObj.inputSource))
+        {
+            Grip();
+        }
+        else if (spawn.GetStateUp(trackedObj.inputSource))
+        {
+            Release();
+        }
     }
 
     private void Grip()
