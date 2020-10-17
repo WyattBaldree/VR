@@ -6,16 +6,24 @@ using UnityEngine;
 public class VRObject : MonoBehaviour
 {
     public int priority = 5;
+    public List<GameObject> grabPointList = new List<GameObject>();
 
     private Collider collider;
+    private Rigidbody rigidBody;
 
     // Start is called before the first frame update
     void Start()
     {
-        collider = gameObject.GetComponent<Collider>();
+        collider = GetComponent<Collider>();
         if (!collider)
         {
             collider = gameObject.AddComponent(typeof(SphereCollider)) as SphereCollider;
+        }
+
+        rigidBody = GetComponent<Rigidbody>();
+        if (!rigidBody)
+        {
+            rigidBody = gameObject.AddComponent(typeof(Rigidbody)) as Rigidbody;
         }
 
         gameObject.layer = 8;

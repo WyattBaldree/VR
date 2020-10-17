@@ -6,13 +6,12 @@ using Valve.VR;
 
 public class VRController : MonoBehaviour
 {
-    private Collider collider;
-
     public SteamVR_Action_Boolean spawn = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("InteractUI");
-    SteamVR_Behaviour_Pose trackedObj;
-
+    public Rigidbody grabAttachPoint;
+    
+    private FixedJoint grabJoint;
+    private SteamVR_Behaviour_Pose trackedObj;
     private List<VRObject> VRObjectCollidingList = new List<VRObject>();
-    private VRObject grippedObject = null;
 
     private void Awake()
     {
@@ -22,10 +21,11 @@ public class VRController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        collider = gameObject.GetComponent<Collider>();
-        if (!collider)
+        Collider grabCollider = gameObject.GetComponent<Collider>();
+        if (!grabCollider)
         {
-            collider = gameObject.AddComponent(typeof(SphereCollider)) as SphereCollider;
+            Debug.LogWarning("The VR Controller does not have a collider. A default sphere collider has been added.", this);
+            grabCollider = gameObject.AddComponent(typeof(SphereCollider)) as SphereCollider;
         }
 
         gameObject.layer = 8;
@@ -33,11 +33,11 @@ public class VRController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (spawn.GetStateDown(trackedObj.inputSource))
+        if (grabJoint == null && spawn.GetStateDown(trackedObj.inputSource))
         {
             Grip();
         }
-        else if (spawn.GetStateUp(trackedObj.inputSource))
+        else if(grabJoint != null && spawn.GetStateUp(trackedObj.inputSource))
         {
             Release();
         }
@@ -45,46 +45,76 @@ public class VRController : MonoBehaviour
 
     private void Grip()
     {
-        VRObject objectToGrip = null;
-        int highestPriority = int.MinValue;
-        foreach(VRObject vrObj in VRObjectCollidingList)
+        if (grabJoint == null) 
         {
-            if(vrObj.priority > highestPriority)
+            VRObject objectToGrip = null;
+            int highestPriority = int.MinValue;
+            foreach (VRObject vrObj in VRObjectCollidingList)
             {
-                objectToGrip = vrObj;
-                highestPriority = vrObj.priority;
+                if (vrObj.priority > highestPriority)
+                {
+                    objectToGrip = vrObj;
+                    highestPriority = vrObj.priority;
+                }
             }
-        }
 
-        if (objectToGrip)
-        {
-            objectToGrip.Gripped();
-            grippedObject = objectToGrip;
-            grippedObject.transform.parent = transform;
+            if (objectToGrip)
+            {
+                Debug.Log("gripped", this);
+                objectToGrip.Gripped();
+                //objectToGrip.transform.position = grabAttachPoint.transform.position;
+
+                grabJoint = objectToGrip.gameObject.AddComponent<FixedJoint>();
+                grabJoint.connectedBody = grabAttachPoint;
+            }
         }
     }
 
     private void Release()
     {
-        if (grippedObject)
+        if (grabJoint != null)
         {
-            grippedObject.Released();
-            grippedObject = null;
-            grippedObject.transform.parent = null;
+            grabJoint.gameObject.GetComponent<VRObject>().Released();
+            Rigidbody rb = grabJoint.gameObject.GetComponent<Rigidbody>();
+            Object.DestroyImmediate(grabJoint);
+            grabJoint = null;
+            
+            Transform origin = trackedObj.origin ? trackedObj.origin : trackedObj.transform.parent;
+            if (origin != null)
+            {
+                rb.velocity = origin.TransformVector(trackedObj.GetVelocity());
+                rb.angularVelocity = origin.TransformVector(trackedObj.GetAngularVelocity());
+            }
+            else
+            {
+                rb.velocity = trackedObj.GetVelocity();
+                rb.angularVelocity = trackedObj.GetAngularVelocity();
+            }
+
+            rb.maxAngularVelocity = rb.angularVelocity.magnitude;
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Enter: " + other.gameObject.name);
+        VRObject vrObj = other.gameObject.GetComponent<VRObject>();
+        if (vrObj)
+        {
+            VRObjectCollidingList.Add(vrObj);
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
-        Debug.Log("Enter: " + collision.gameObject.name);
-        VRObject vrObj = collision.gameObject.GetComponent<VRObject>();
-        if(vrObj) VRObjectCollidingList.Add(vrObj);
-    }
+        Debug.Log("Exit: " + other.gameObject.name);
+        VRObject vrObj = other.gameObject.GetComponent<VRObject>();
+        if (vrObj)
+        {
+            VRObjectCollidingList.Remove(vrObj);
+            if (VRObjectCollidingList.Count <= 0)
+            {
 
-    private void OnCollisionExit(Collision collision)
-    {
-        Debug.Log("Exit: " + collision.gameObject.name);
-        VRObject vrObj = collision.gameObject.GetComponent<VRObject>();
-        if (vrObj) VRObjectCollidingList.Remove(vrObj);
+            }
+        }
     }
 }
