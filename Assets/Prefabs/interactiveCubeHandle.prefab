@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3456435877927310996}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.865, z: 0}
+  m_LocalPosition: {x: 0, y: -0.94, z: 0}
   m_LocalScale: {x: 0.17015107, y: 0.4435094, z: 0.17015107}
   m_Children:
   - {fileID: 19398132149648809}
@@ -210,7 +210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   priority: 5
   grabPointList:
-  - {fileID: 19398132149648808}
+  - {fileID: 0}
 --- !u!1001 &7729741701594078092
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -282,13 +282,12 @@ PrefabInstance:
       propertyPath: billboardCam
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7865207152092693329, guid: a08d4695084b90c47aa551e7153819ce, type: 3}
+      propertyPath: m_Radius
+      value: 0.07
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a08d4695084b90c47aa551e7153819ce, type: 3}
---- !u!1 &19398132149648808 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7710555500850193956, guid: a08d4695084b90c47aa551e7153819ce, type: 3}
-  m_PrefabInstance: {fileID: 7729741701594078092}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &19398132149648809 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7710555500850193957, guid: a08d4695084b90c47aa551e7153819ce, type: 3}

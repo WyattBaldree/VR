@@ -85,9 +85,11 @@ public class VRController : MonoBehaviour
                 objectToGrip.Gripped();
                 if (grabbedGrabPoint)
                 {
+                    objectToGrip.transform.position = grabAttachPoint.transform.position;
+                    objectToGrip.transform.rotation = grabAttachPoint.transform.rotation;
 
-                    Vector3 grabPointOffset = grabbedGrabPoint.transform.position - objectToGrip.transform.position;
-                    objectToGrip.transform.position = grabAttachPoint.transform.position + grabPointOffset;
+                    Vector3 grabPointPositionOffset = grabAttachPoint.transform.position - grabbedGrabPoint.transform.position;
+                    objectToGrip.transform.position += grabPointPositionOffset;
                 }
 
                 grabJoint = objectToGrip.gameObject.AddComponent<FixedJoint>();
