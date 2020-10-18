@@ -6,18 +6,18 @@ using UnityEngine;
 public class VRObject : MonoBehaviour
 {
     public int priority = 5;
-    public List<GameObject> grabPointList = new List<GameObject>();
+    public GrabPoint[] grabPointList = { };
 
-    private Collider collider;
+    private Collider myCollider;
     private Rigidbody rigidBody;
 
     // Start is called before the first frame update
     void Start()
     {
-        collider = GetComponent<Collider>();
-        if (!collider)
+        myCollider = GetComponent<Collider>();
+        if (!myCollider)
         {
-            collider = gameObject.AddComponent(typeof(SphereCollider)) as SphereCollider;
+            myCollider = gameObject.AddComponent(typeof(SphereCollider)) as SphereCollider;
         }
 
         rigidBody = GetComponent<Rigidbody>();
@@ -27,6 +27,12 @@ public class VRObject : MonoBehaviour
         }
 
         gameObject.layer = 8;
+
+        grabPointList = gameObject.GetComponentsInChildren<GrabPoint>();
+        foreach(GrabPoint gp in grabPointList)
+        {
+            gp.SetParentVRObject(this);
+        }
     }
 
     public void Gripped()

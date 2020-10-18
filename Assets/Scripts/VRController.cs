@@ -12,6 +12,7 @@ public class VRController : MonoBehaviour
     private FixedJoint grabJoint;
     private SteamVR_Behaviour_Pose trackedObj;
     private List<VRObject> VRObjectCollidingList = new List<VRObject>();
+    private List<GrabPoint> GrabPointCollidingList = new List<GrabPoint>();
 
     private void Awake()
     {
@@ -47,22 +48,47 @@ public class VRController : MonoBehaviour
     {
         if (grabJoint == null) 
         {
+
+
+
+            //We try to grab GrabPoints before trying to grab VRObjects themselves.
             VRObject objectToGrip = null;
+            GrabPoint grabbedGrabPoint = null;
+
             int highestPriority = int.MinValue;
+            foreach (GrabPoint grabPoint in GrabPointCollidingList)
+            {
+                VRObject grabPointParent = grabPoint.GetParentVRObject();
+                if (grabPointParent.priority + 1 > highestPriority)
+                {
+                    objectToGrip = grabPointParent;
+                    highestPriority = grabPointParent.priority + 1;
+                    grabbedGrabPoint = grabPoint;
+                }
+            }
+
+            highestPriority = int.MinValue;
             foreach (VRObject vrObj in VRObjectCollidingList)
             {
                 if (vrObj.priority > highestPriority)
                 {
                     objectToGrip = vrObj;
                     highestPriority = vrObj.priority;
+                    grabbedGrabPoint = null;
                 }
             }
 
             if (objectToGrip)
             {
+
                 Debug.Log("gripped", this);
                 objectToGrip.Gripped();
-                //objectToGrip.transform.position = grabAttachPoint.transform.position;
+                if (grabbedGrabPoint)
+                {
+
+                    Vector3 grabPointOffset = grabbedGrabPoint.transform.position - objectToGrip.transform.position;
+                    objectToGrip.transform.position = grabAttachPoint.transform.position + grabPointOffset;
+                }
 
                 grabJoint = objectToGrip.gameObject.AddComponent<FixedJoint>();
                 grabJoint.connectedBody = grabAttachPoint;
@@ -102,6 +128,12 @@ public class VRController : MonoBehaviour
         {
             VRObjectCollidingList.Add(vrObj);
         }
+
+        GrabPoint grabPoint = other.gameObject.GetComponent<GrabPoint>();
+        if (grabPoint)
+        {
+            GrabPointCollidingList.Add(grabPoint);
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -111,10 +143,12 @@ public class VRController : MonoBehaviour
         if (vrObj)
         {
             VRObjectCollidingList.Remove(vrObj);
-            if (VRObjectCollidingList.Count <= 0)
-            {
+        }
 
-            }
+        GrabPoint grabPoint = other.gameObject.GetComponent<GrabPoint>();
+        if (grabPoint)
+        {
+            GrabPointCollidingList.Remove(grabPoint);
         }
     }
 }

@@ -7,6 +7,6 @@ public class BillboardSprite : MonoBehaviour
     [ExecuteInEditMode]
     void Update()
     {
-        transform.LookAt(billboardCam.transform.position, -Vector3.up);
+        transform.LookAt(billboardCam.transform.position, Vector3.up);
     }
 }
