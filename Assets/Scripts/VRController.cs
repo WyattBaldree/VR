@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Events;
 using Valve.VR;
+using UnityEngine.Assertions;
 
 public class VRController : MonoBehaviour
 {
@@ -16,18 +18,14 @@ public class VRController : MonoBehaviour
 
     private void Awake()
     {
-        trackedObj = GetComponent<SteamVR_Behaviour_Pose>();
+        trackedObj = transform.parent.GetComponent<SteamVR_Behaviour_Pose>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
         Collider grabCollider = gameObject.GetComponent<Collider>();
-        if (!grabCollider)
-        {
-            Debug.LogWarning("The VR Controller does not have a collider. A default sphere collider has been added.", this);
-            grabCollider = gameObject.AddComponent(typeof(SphereCollider)) as SphereCollider;
-        }
+        Assert.IsNotNull(grabCollider);
 
         gameObject.layer = 8;
     }
@@ -67,7 +65,6 @@ public class VRController : MonoBehaviour
                 }
             }
 
-            highestPriority = int.MinValue;
             foreach (VRObject vrObj in VRObjectCollidingList)
             {
                 if (vrObj.priority > highestPriority)
@@ -87,9 +84,10 @@ public class VRController : MonoBehaviour
                 {
                     objectToGrip.transform.position = grabAttachPoint.transform.position;
                     objectToGrip.transform.rotation = grabAttachPoint.transform.rotation;
+                    objectToGrip.transform.Rotate(grabbedGrabPoint.rotationOffset);
 
                     Vector3 grabPointPositionOffset = grabAttachPoint.transform.position - grabbedGrabPoint.transform.position;
-                    objectToGrip.transform.position += grabPointPositionOffset;
+                    objectToGrip.transform.position += grabPointPositionOffset + grabbedGrabPoint.postitionOffset;
                 }
 
                 grabJoint = objectToGrip.gameObject.AddComponent<FixedJoint>();
@@ -126,6 +124,7 @@ public class VRController : MonoBehaviour
     {
         Debug.Log("Enter: " + other.gameObject.name);
         VRObject vrObj = other.gameObject.GetComponent<VRObject>();
+        if(!vrObj) vrObj = other.gameObject.GetComponentInParent<VRObject>();
         if (vrObj)
         {
             VRObjectCollidingList.Add(vrObj);
@@ -142,6 +141,7 @@ public class VRController : MonoBehaviour
     {
         Debug.Log("Exit: " + other.gameObject.name);
         VRObject vrObj = other.gameObject.GetComponent<VRObject>();
+        if (!vrObj) vrObj = other.gameObject.GetComponentInParent<VRObject>();
         if (vrObj)
         {
             VRObjectCollidingList.Remove(vrObj);

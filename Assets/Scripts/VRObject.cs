@@ -2,29 +2,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class VRObject : MonoBehaviour
 {
     public int priority = 5;
     public GrabPoint[] grabPointList = { };
 
-    private Collider myCollider;
-    private Rigidbody rigidBody;
-
     // Start is called before the first frame update
     void Start()
     {
-        myCollider = GetComponent<Collider>();
-        if (!myCollider)
-        {
-            myCollider = gameObject.AddComponent(typeof(SphereCollider)) as SphereCollider;
-        }
+        Collider myCollider = GetComponent<Collider>();
+        if(!myCollider) myCollider = GetComponentInChildren<Collider>();
+        Assert.IsNotNull(myCollider, "This VR Object and it's children do not have a collider. At least 1 required.");
 
-        rigidBody = GetComponent<Rigidbody>();
-        if (!rigidBody)
-        {
-            rigidBody = gameObject.AddComponent(typeof(Rigidbody)) as Rigidbody;
-        }
+        Rigidbody rigidBody = GetComponent<Rigidbody>();
+        Assert.IsNotNull(rigidBody, "This VR Object does not have a rigid body.");
 
         gameObject.layer = 8;
 
