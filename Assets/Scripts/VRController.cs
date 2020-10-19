@@ -11,7 +11,7 @@ public class VRController : MonoBehaviour
     public SteamVR_Action_Boolean spawn = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("InteractUI");
     public Rigidbody grabAttachPoint;
     
-    private FixedJoint grabJoint;
+    private ConfigurableJoint grabJoint;
     private SteamVR_Behaviour_Pose trackedObj;
     private List<VRObject> VRObjectCollidingList = new List<VRObject>();
     private List<GrabPoint> GrabPointCollidingList = new List<GrabPoint>();
@@ -90,7 +90,31 @@ public class VRController : MonoBehaviour
                     objectToGrip.transform.position += grabPointPositionOffset + grabbedGrabPoint.postitionOffset;
                 }
 
-                grabJoint = objectToGrip.gameObject.AddComponent<FixedJoint>();
+                grabJoint = objectToGrip.gameObject.AddComponent<ConfigurableJoint>();
+                grabJoint.xMotion = ConfigurableJointMotion.Limited;
+                grabJoint.yMotion = ConfigurableJointMotion.Limited;
+                grabJoint.zMotion = ConfigurableJointMotion.Limited;
+                grabJoint.angularXMotion = ConfigurableJointMotion.Locked;
+                grabJoint.angularYMotion = ConfigurableJointMotion.Locked;
+                grabJoint.angularZMotion = ConfigurableJointMotion.Locked;
+
+                SoftJointLimit sjl = new SoftJointLimit();
+                sjl.limit = 0.00001f;
+
+                grabJoint.linearLimit = sjl;
+
+                SoftJointLimitSpring sjls = new SoftJointLimitSpring();
+                sjls.spring = 100000.0f;
+
+                grabJoint.linearLimitSpring = sjls;
+
+                grabJoint.anchor = new Vector3(0, 0, 0);
+                grabJoint.axis = new Vector3(1, 0, 0);
+                grabJoint.connectedAnchor = new Vector3(0, 0, 0);
+                grabJoint.secondaryAxis = new Vector3(1, 0, 0);
+                //grabJoint.autoConfigureConnectedAnchor = false;
+
+
                 grabJoint.connectedBody = grabAttachPoint;
             }
         }
