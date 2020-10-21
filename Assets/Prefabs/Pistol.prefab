@@ -163,7 +163,7 @@ ConfigurableJoint:
     limit: 0
     bounciness: 0
     contactDistance: 0
-  m_TargetPosition: {x: 0, y: 0, z: 0}
+  m_TargetPosition: {x: 0, y: -10, z: 0}
   m_TargetVelocity: {x: 0, y: 0, z: 0}
   m_XDrive:
     serializedVersion: 3
