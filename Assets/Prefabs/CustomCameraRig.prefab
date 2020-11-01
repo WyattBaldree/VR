@@ -131,9 +131,9 @@ ConfigurableJoint:
   m_XMotion: 2
   m_YMotion: 2
   m_ZMotion: 2
-  m_AngularXMotion: 0
-  m_AngularYMotion: 0
-  m_AngularZMotion: 0
+  m_AngularXMotion: 2
+  m_AngularYMotion: 2
+  m_AngularZMotion: 2
   m_LinearLimitSpring:
     spring: 0
     damper: 0
@@ -168,29 +168,29 @@ ConfigurableJoint:
   m_XDrive:
     serializedVersion: 3
     positionSpring: 5000
-    positionDamper: 0
+    positionDamper: 500
     maximumForce: 3.4028233e+38
   m_YDrive:
     serializedVersion: 3
     positionSpring: 5000
-    positionDamper: 0
+    positionDamper: 500
     maximumForce: 3.4028233e+38
   m_ZDrive:
     serializedVersion: 3
     positionSpring: 5000
-    positionDamper: 0
+    positionDamper: 500
     maximumForce: 3.4028233e+38
   m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
   m_RotationDriveMode: 0
   m_AngularXDrive:
     serializedVersion: 3
-    positionSpring: 0
+    positionSpring: 5000
     positionDamper: 0
     maximumForce: 3.4028233e+38
   m_AngularYZDrive:
     serializedVersion: 3
-    positionSpring: 0
+    positionSpring: 5000
     positionDamper: 0
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
@@ -322,6 +322,7 @@ MonoBehaviour:
     needsReinit: 0
   grabAttachPoint: {fileID: 60954066}
   trackedObj: {fileID: 6676057189724626165}
+  orientation: 0
 --- !u!1 &1107718839
 GameObject:
   m_ObjectHideFlags: 0
@@ -536,9 +537,9 @@ ConfigurableJoint:
   m_XMotion: 2
   m_YMotion: 2
   m_ZMotion: 2
-  m_AngularXMotion: 0
-  m_AngularYMotion: 0
-  m_AngularZMotion: 0
+  m_AngularXMotion: 2
+  m_AngularYMotion: 2
+  m_AngularZMotion: 2
   m_LinearLimitSpring:
     spring: 0
     damper: 0
@@ -573,29 +574,29 @@ ConfigurableJoint:
   m_XDrive:
     serializedVersion: 3
     positionSpring: 5000
-    positionDamper: 0
+    positionDamper: 500
     maximumForce: 3.4028233e+38
   m_YDrive:
     serializedVersion: 3
     positionSpring: 5000
-    positionDamper: 0
+    positionDamper: 500
     maximumForce: 3.4028233e+38
   m_ZDrive:
     serializedVersion: 3
     positionSpring: 5000
-    positionDamper: 0
+    positionDamper: 500
     maximumForce: 3.4028233e+38
   m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
   m_RotationDriveMode: 0
   m_AngularXDrive:
     serializedVersion: 3
-    positionSpring: 0
+    positionSpring: 5000
     positionDamper: 0
     maximumForce: 3.4028233e+38
   m_AngularYZDrive:
     serializedVersion: 3
-    positionSpring: 0
+    positionSpring: 5000
     positionDamper: 0
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
@@ -727,6 +728,7 @@ MonoBehaviour:
     needsReinit: 0
   grabAttachPoint: {fileID: 1257430316}
   trackedObj: {fileID: 6676057191072236413}
+  orientation: 1
 --- !u!1 &1835154567
 GameObject:
   m_ObjectHideFlags: 0
@@ -737,7 +739,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1835154568}
   - component: {fileID: 1835154569}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: gripPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -784,7 +786,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2342414459370439576}
   - component: {fileID: 7060079642328821788}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: gripPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

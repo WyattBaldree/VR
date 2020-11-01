@@ -14,10 +14,10 @@ TagManager:
   - 
   - 
   - Interaction
-  - 
-  - 
-  - 
-  - 
+  - HandRight
+  - HandLeft
+  - GrabbedRight
+  - GrabbedLeft
   - 
   - 
   - 

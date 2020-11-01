@@ -28,6 +28,15 @@ public class VRObject : MonoBehaviour
         }
     }
 
+    public void SetLayerOfChildren(int newLayer) 
+    {
+        gameObject.layer = newLayer;
+        foreach(Transform t in GetComponentInChildren<Transform>())
+        {
+            t.gameObject.layer = newLayer;
+        }
+    }
+
     public void Gripped()
     {
         Debug.Log(gameObject.name + " was gripped!");
