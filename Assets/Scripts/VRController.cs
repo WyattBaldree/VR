@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Events;
@@ -9,12 +11,20 @@ public class VRController : MonoBehaviour
 {
     public SteamVR_Action_Boolean spawn = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("InteractUI");
     public Rigidbody grabAttachPoint;
+    public ConfigurableJoint controllerJoint;
     public SteamVR_Behaviour_Pose trackedObj;
     public OrientationEnum orientation = OrientationEnum.right;
+
+    [NonSerialized]
+    public bool hasAngularDrive = true;
 
     private ConfigurableJoint grabJoint;
     private List<VRObject> VRObjectCollidingList = new List<VRObject>();
     private List<GrabPoint> GrabPointCollidingList = new List<GrabPoint>();
+
+    private Vector3 defaultDriveSpring;
+    private Vector2 defaultAngularDriveSpring;
+    private Vector2 defaultAngularDriveMaxForce;
 
     private bool setup = false;
 
@@ -35,9 +45,11 @@ public class VRController : MonoBehaviour
 
         Assert.IsNotNull(trackedObj);
 
-        //grabAttachPoint.transform.position = trackedObj.transform.position;
-
         gameObject.layer = 8;
+
+        defaultDriveSpring = new Vector3(controllerJoint.xDrive.positionSpring, controllerJoint.yDrive.positionSpring, controllerJoint.zDrive.positionSpring);
+        defaultAngularDriveSpring = new Vector2(controllerJoint.angularXDrive.positionSpring, controllerJoint.angularYZDrive.positionSpring);
+        defaultAngularDriveMaxForce = new Vector2(controllerJoint.angularXDrive.maximumForce, controllerJoint.angularYZDrive.maximumForce);
     }
 
     private void FixedUpdate()
@@ -94,7 +106,6 @@ public class VRController : MonoBehaviour
             {
 
                 Debug.Log("gripped", this);
-                objectToGrip.Gripped();
                 
                 if (grabbedGrabPoint)
                 {
@@ -128,6 +139,13 @@ public class VRController : MonoBehaviour
                 grabJoint.angularXMotion = ConfigurableJointMotion.Locked;
                 grabJoint.angularYMotion = ConfigurableJointMotion.Locked;
                 grabJoint.angularZMotion = ConfigurableJointMotion.Locked;
+                //grabJoint.projectionMode = JointProjectionMode.PositionAndRotation;
+
+                if (objectToGrip.grabList.Count > 0)
+                {
+                    RemoveAngularDrive();
+                }
+
 
                 /*SoftJointLimit sjl = new SoftJointLimit();
                 sjl.limit = 0.00001f;
@@ -147,6 +165,9 @@ public class VRController : MonoBehaviour
 
                 grabJoint.enableCollision = false;
                 grabJoint.connectedBody = grabAttachPoint;
+
+
+                objectToGrip.Gripped(this);
             }
         }
     }
@@ -158,11 +179,13 @@ public class VRController : MonoBehaviour
             VRObject vro = grabJoint.gameObject.GetComponent<VRObject>();
             Physics.IgnoreCollision(grabAttachPoint.GetComponent<Collider>(), vro.GetComponent<Collider>(), false);
             //vro.SetLayerOfChildren(8);
-            vro.Released();
+            vro.Released(this);
 
             Rigidbody rb = grabJoint.gameObject.GetComponent<Rigidbody>();
-            Object.DestroyImmediate(grabJoint);
+            DestroyImmediate(grabJoint);
             grabJoint = null;
+
+            RestoreAngularDrive();
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -197,5 +220,37 @@ public class VRController : MonoBehaviour
         {
             GrabPointCollidingList.Remove(grabPoint);
         }
+    }
+
+    public void RemoveAngularDrive()
+    {
+        hasAngularDrive = false;
+
+        JointDrive jd = new JointDrive();
+        jd.positionSpring = 0;
+        jd.positionDamper = 0;
+        jd.maximumForce = 0;
+
+        controllerJoint.angularXDrive = jd;
+        controllerJoint.angularYZDrive = jd;
+    }
+
+    public void RestoreAngularDrive()
+    {
+        hasAngularDrive = true;
+
+        JointDrive jd = new JointDrive();
+        jd.positionSpring = defaultAngularDriveSpring.x;
+        jd.positionDamper = 0;
+        jd.maximumForce = defaultAngularDriveMaxForce.x;
+
+        controllerJoint.angularXDrive = jd;
+
+        jd = new JointDrive();
+        jd.positionSpring = defaultAngularDriveSpring.y;
+        jd.positionDamper = 0;
+        jd.maximumForce = defaultAngularDriveMaxForce.y;
+
+        controllerJoint.angularYZDrive = jd;
     }
 }
