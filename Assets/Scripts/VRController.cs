@@ -13,12 +13,12 @@ public class VRController : MonoBehaviour
     public Rigidbody grabAttachPoint;
     public ConfigurableJoint controllerJoint;
     public SteamVR_Behaviour_Pose trackedObj;
-    public OrientationEnum orientation = OrientationEnum.right;
+    public GameObject controllerGripPoint;
 
     [NonSerialized]
     public bool hasAngularDrive = true;
 
-    private ConfigurableJoint grabJoint;
+    private FixedJoint grabJoint;
     private List<VRObject> VRObjectCollidingList = new List<VRObject>();
     private List<GrabPoint> GrabPointCollidingList = new List<GrabPoint>();
 
@@ -28,10 +28,7 @@ public class VRController : MonoBehaviour
 
     private bool setup = false;
 
-    public enum OrientationEnum { 
-        right,
-        left
-    }
+    private VRObject grippedObject;
 
     private void Awake()
     {
@@ -56,11 +53,13 @@ public class VRController : MonoBehaviour
     {
         if (!setup)
         {
-            grabAttachPoint.transform.position = trackedObj.transform.position;
+            grabAttachPoint.MovePosition(trackedObj.GetComponentInChildren<Rigidbody>().position);
             grabAttachPoint.velocity = new Vector3(0, 0, 0);
             grabAttachPoint.angularVelocity = new Vector3(0, 0, 0);
             setup = true;
         }
+
+        RemoveOrbitVelocityComponent();
 
         if (grabJoint == null && spawn.GetStateDown(trackedObj.inputSource))
         {
@@ -70,6 +69,25 @@ public class VRController : MonoBehaviour
         {
             Release();
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Vector3 toControllerVector = controllerGripPoint.transform.position - grabAttachPoint.transform.position;
+        Gizmos.DrawLine(grabAttachPoint.transform.position, grabAttachPoint.transform.position + toControllerVector);
+    }
+
+    private void RemoveOrbitVelocityComponent()
+    {
+        //get dot product of hand velocity and the vector from the hand to the controller
+        Vector3 handVelocity = grabAttachPoint.velocity;
+        Vector3 handToControllerVector = trackedObj.transform.position - grabAttachPoint.transform.position;
+
+        Plane orbitPlane  = new Plane(handToControllerVector / handToControllerVector.magnitude, grabAttachPoint.transform.position);
+
+        Vector3 orbitVelocity = Vector3.ProjectOnPlane(handVelocity, handToControllerVector / handToControllerVector.magnitude);
+
+        grabAttachPoint.velocity -= orbitVelocity;
     }
 
     private void Grip()
@@ -109,15 +127,6 @@ public class VRController : MonoBehaviour
                 
                 if (grabbedGrabPoint)
                 {
-                    /*objectToGrip.transform.rotation = grabAttachPoint.transform.rotation;
-                    Vector3 grabPointRotationOffset = grabAttachPoint.transform.eulerAngles - grabbedGrabPoint.transform.eulerAngles;
-                    objectToGrip.transform.eulerAngles += grabPointRotationOffset + grabbedGrabPoint.rotationOffset;
-                    
-                    objectToGrip.transform.position = grabAttachPoint.transform.position;
-                    Vector3 grabPointPositionOffset = grabAttachPoint.transform.position - grabbedGrabPoint.transform.position;
-                    objectToGrip.transform.position += grabPointPositionOffset + grabbedGrabPoint.postitionOffset;
-                    Physics.IgnoreCollision(grabAttachPoint.GetComponent<Collider>(), objectToGrip.GetComponent<Collider>());*/
-
                     grabAttachPoint.transform.rotation = objectToGrip.transform.rotation;
                     Vector3 grabPointRotationOffset =  grabbedGrabPoint.transform.eulerAngles - grabAttachPoint.transform.eulerAngles;
                     grabAttachPoint.transform.eulerAngles += grabPointRotationOffset + grabbedGrabPoint.rotationOffset;
@@ -126,48 +135,23 @@ public class VRController : MonoBehaviour
                     Vector3 grabPointPositionOffset = grabbedGrabPoint.transform.position - grabAttachPoint.transform.position;
                     grabAttachPoint.transform.position += grabPointPositionOffset + grabbedGrabPoint.postitionOffset;
                     Physics.IgnoreCollision(grabAttachPoint.GetComponent<Collider>(), objectToGrip.GetComponent<Collider>());
-
-                    //if (orientation == OrientationEnum.right) objectToGrip.SetLayerOfChildren(11);
-                    //else objectToGrip.SetLayerOfChildren(12);
                 }
 
-                grabJoint = objectToGrip.gameObject.AddComponent<ConfigurableJoint>();
+                grabJoint = grabAttachPoint.gameObject.AddComponent<FixedJoint>();
+                grabJoint.enablePreprocessing = false;
 
-                grabJoint.xMotion = ConfigurableJointMotion.Locked;
-                grabJoint.yMotion = ConfigurableJointMotion.Locked;
-                grabJoint.zMotion = ConfigurableJointMotion.Locked;
-                grabJoint.angularXMotion = ConfigurableJointMotion.Locked;
-                grabJoint.angularYMotion = ConfigurableJointMotion.Locked;
-                grabJoint.angularZMotion = ConfigurableJointMotion.Locked;
-                //grabJoint.projectionMode = JointProjectionMode.PositionAndRotation;
 
                 if (objectToGrip.grabList.Count > 0)
                 {
                     RemoveAngularDrive();
                 }
 
-
-                /*SoftJointLimit sjl = new SoftJointLimit();
-                sjl.limit = 0.00001f;
-
-                grabJoint.linearLimit = sjl;
-
-                SoftJointLimitSpring sjls = new SoftJointLimitSpring();
-                sjls.spring = 100000.0f;
-
-                grabJoint.linearLimitSpring = sjls;
-
-                grabJoint.anchor = new Vector3(0, 0, 0);
-                grabJoint.axis = new Vector3(1, 0, 0);
-                grabJoint.connectedAnchor = new Vector3(0, 0, 0);
-                grabJoint.secondaryAxis = new Vector3(1, 0, 0);
-                //grabJoint.autoConfigureConnectedAnchor = false;*/
-
                 grabJoint.enableCollision = false;
-                grabJoint.connectedBody = grabAttachPoint;
+                grabJoint.connectedBody = objectToGrip.GetComponent<Rigidbody>();
 
 
                 objectToGrip.Gripped(this);
+                grippedObject = objectToGrip;
             }
         }
     }
@@ -176,14 +160,14 @@ public class VRController : MonoBehaviour
     {
         if (grabJoint != null)
         {
-            VRObject vro = grabJoint.gameObject.GetComponent<VRObject>();
-            Physics.IgnoreCollision(grabAttachPoint.GetComponent<Collider>(), vro.GetComponent<Collider>(), false);
+            Physics.IgnoreCollision(grabAttachPoint.GetComponent<Collider>(), grippedObject.GetComponent<Collider>(), false);
             //vro.SetLayerOfChildren(8);
-            vro.Released(this);
+            grippedObject.Released(this);
 
             Rigidbody rb = grabJoint.gameObject.GetComponent<Rigidbody>();
             DestroyImmediate(grabJoint);
             grabJoint = null;
+            grippedObject = null;
 
             RestoreAngularDrive();
         }

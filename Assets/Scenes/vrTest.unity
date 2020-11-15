@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4682587073520571332, guid: 008cba605f2d41a46b834c1c0cbd0ae1, type: 3}
+      propertyPath: m_Mass
+      value: 1500
+      objectReference: {fileID: 0}
     - target: {fileID: 4682587073520571352, guid: 008cba605f2d41a46b834c1c0cbd0ae1, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -196,41 +200,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 008cba605f2d41a46b834c1c0cbd0ae1, type: 3}
---- !u!21 &201583910
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Sprites/Default
-  m_Shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _AlphaTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - PixelSnap: 0
-    - _EnableExternalAlpha: 0
-    m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1001 &332739272
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -238,38 +207,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 60954065, guid: e0d45545c3792ad4c981d3fd2ee63899, type: 3}
-      propertyPath: m_AngularXDrive.maximumForce
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 60954065, guid: e0d45545c3792ad4c981d3fd2ee63899, type: 3}
-      propertyPath: m_AngularYZDrive.maximumForce
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 699225680, guid: e0d45545c3792ad4c981d3fd2ee63899, type: 3}
-      propertyPath: controllerJoint
-      value: 
-      objectReference: {fileID: 370409858}
-    - target: {fileID: 1776253866, guid: e0d45545c3792ad4c981d3fd2ee63899, type: 3}
-      propertyPath: controllerJoint
-      value: 
-      objectReference: {fileID: 1638481885}
-    - target: {fileID: 6103306325603136294, guid: e0d45545c3792ad4c981d3fd2ee63899, type: 3}
-      propertyPath: m_AngularXDrive.maximumForce
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 6103306325603136294, guid: e0d45545c3792ad4c981d3fd2ee63899, type: 3}
-      propertyPath: m_AngularYZDrive.maximumForce
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 6715743094099073235, guid: e0d45545c3792ad4c981d3fd2ee63899, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 892694922}
+      objectReference: {fileID: 752051454}
     - target: {fileID: 6715743094100105559, guid: e0d45545c3792ad4c981d3fd2ee63899, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 201583910}
+      objectReference: {fileID: 1287429700}
     - target: {fileID: 6715743094101975561, guid: e0d45545c3792ad4c981d3fd2ee63899, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.80210686
@@ -320,11 +265,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0d45545c3792ad4c981d3fd2ee63899, type: 3}
---- !u!153 &370409858 stripped
-ConfigurableJoint:
-  m_CorrespondingSourceObject: {fileID: 60954065, guid: e0d45545c3792ad4c981d3fd2ee63899, type: 3}
-  m_PrefabInstance: {fileID: 332739272}
-  m_PrefabAsset: {fileID: 0}
 --- !u!20 &616910382 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 6734026219566360137, guid: e0d45545c3792ad4c981d3fd2ee63899, type: 3}
@@ -406,7 +346,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
---- !u!43 &892694922
+--- !u!43 &752051454
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -570,6 +510,41 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!21 &1287429700
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Sprites/Default
+  m_Shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AlphaTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - PixelSnap: 0
+    - _EnableExternalAlpha: 0
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &1433015044
 GameObject:
   m_ObjectHideFlags: 0
@@ -771,11 +746,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!153 &1638481885 stripped
-ConfigurableJoint:
-  m_CorrespondingSourceObject: {fileID: 6103306325603136294, guid: e0d45545c3792ad4c981d3fd2ee63899, type: 3}
-  m_PrefabInstance: {fileID: 332739272}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2092302209
 GameObject:
   m_ObjectHideFlags: 0
@@ -914,6 +884,18 @@ PrefabInstance:
       propertyPath: billboardCam
       value: 
       objectReference: {fileID: 616910382}
+    - target: {fileID: 2463170785781489420, guid: 0b8db19f162eb444dbb7d084b50726d5, type: 3}
+      propertyPath: m_TargetPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2463170785781489420, guid: 0b8db19f162eb444dbb7d084b50726d5, type: 3}
+      propertyPath: m_TargetPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2463170785781489420, guid: 0b8db19f162eb444dbb7d084b50726d5, type: 3}
+      propertyPath: m_TargetPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6084898767421396480, guid: 0b8db19f162eb444dbb7d084b50726d5, type: 3}
       propertyPath: billboardCam
       value: 
@@ -979,6 +961,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3883398818677955407, guid: dce071810375b8646a1e06d0ab6db975, type: 3}
+      propertyPath: m_Mass
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 3883398818677955409, guid: dce071810375b8646a1e06d0ab6db975, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.23
