@@ -9,7 +9,8 @@ using Valve.VR;
 
 public class VRController : MonoBehaviour
 {
-    public SteamVR_Action_Boolean spawn = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("InteractUI");
+    public SteamVR_Action_Boolean trigger;
+    public SteamVR_Action_Boolean grip;
     public Rigidbody grabAttachPoint;
     public ConfigurableJoint controllerJoint;
     public SteamVR_Behaviour_Pose trackedObj;
@@ -61,14 +62,28 @@ public class VRController : MonoBehaviour
 
         RemoveOrbitVelocityComponent();
 
-        if (grabJoint == null && spawn.GetStateDown(trackedObj.inputSource))
+        if (grabJoint == null && grip.GetStateDown(trackedObj.inputSource))
         {
             Grip();
         }
-        else if(grabJoint != null && spawn.GetStateUp(trackedObj.inputSource))
+        else if(grabJoint != null && grip.GetStateUp(trackedObj.inputSource))
         {
             Release();
         }
+
+        if (trigger.GetStateDown(trackedObj.inputSource))
+        {
+            TriggerPressed();
+            if (grippedObject)
+            {
+                grippedObject.TriggerPressed();
+            }
+        }
+    }
+
+    private void TriggerPressed()
+    {
+        throw new NotImplementedException();
     }
 
     private void OnDrawGizmos()

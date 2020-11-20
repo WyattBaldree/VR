@@ -70,4 +70,9 @@ public class VRObject : MonoBehaviour
         }
         Debug.Log(gameObject.name + " was released!");
     }
+
+    internal void TriggerPressed()
+    {
+        throw new NotImplementedException();
+    }
 }
