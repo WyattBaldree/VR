@@ -242,7 +242,7 @@ ConfigurableJoint:
   m_YMotion: 1
   m_ZMotion: 1
   m_AngularXMotion: 2
-  m_AngularYMotion: 1
+  m_AngularYMotion: 0
   m_AngularZMotion: 2
   m_LinearLimitSpring:
     spring: 0
@@ -814,7 +814,6 @@ GameObject:
   - component: {fileID: 946790439}
   - component: {fileID: 946790442}
   - component: {fileID: 946790441}
-  - component: {fileID: 946790445}
   - component: {fileID: 1507677095}
   m_Layer: 0
   m_Name: LeftLowerArm
@@ -868,20 +867,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &946790445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 946790438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da44da8c359dc3048ad715bba4ec9639, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  priority: 5
-  grabPointList: []
 --- !u!153 &1507677095
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -1168,14 +1153,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1257430313}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0.70710707, w: 0.70710653}
   m_LocalPosition: {x: -0.8382, y: 1.363, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1776253865}
   m_Father: {fileID: 19344976852963942}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!135 &1257430317
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1222,9 +1207,9 @@ ConfigurableJoint:
   m_XMotion: 2
   m_YMotion: 2
   m_ZMotion: 2
-  m_AngularXMotion: 2
-  m_AngularYMotion: 2
-  m_AngularZMotion: 2
+  m_AngularXMotion: 1
+  m_AngularYMotion: 1
+  m_AngularZMotion: 1
   m_LinearLimitSpring:
     spring: 0
     damper: 0
@@ -1309,7 +1294,7 @@ ConfigurableJoint:
   m_GameObject: {fileID: 1257430313}
   m_ConnectedBody: {fileID: 946790441}
   m_Anchor: {x: 0, y: 0, z: 0}
-  m_Axis: {x: 1, y: 0, z: 0}
+  m_Axis: {x: 0, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: -0.18219995, y: -0.00000011920929, z: 0}
   serializedVersion: 2
@@ -1317,9 +1302,9 @@ ConfigurableJoint:
   m_XMotion: 1
   m_YMotion: 1
   m_ZMotion: 1
-  m_AngularXMotion: 1
-  m_AngularYMotion: 1
-  m_AngularZMotion: 1
+  m_AngularXMotion: 2
+  m_AngularYMotion: 2
+  m_AngularZMotion: 2
   m_LinearLimitSpring:
     spring: 10000
     damper: 50
@@ -1406,7 +1391,6 @@ GameObject:
   - component: {fileID: 1474731000}
   - component: {fileID: 1474730997}
   - component: {fileID: 1474730995}
-  - component: {fileID: 1474731001}
   - component: {fileID: 1613893887}
   m_Layer: 0
   m_Name: LeftUpperArm
@@ -1460,20 +1444,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1474731001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1474730994}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da44da8c359dc3048ad715bba4ec9639, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  priority: 5
-  grabPointList: []
 --- !u!153 &1613893887
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -1491,7 +1461,7 @@ ConfigurableJoint:
   m_XMotion: 1
   m_YMotion: 1
   m_ZMotion: 1
-  m_AngularXMotion: 2
+  m_AngularXMotion: 1
   m_AngularYMotion: 2
   m_AngularZMotion: 2
   m_LinearLimitSpring:
@@ -1505,22 +1475,22 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LowAngularXLimit:
-    limit: 0
+    limit: -84.48098
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 0
+    limit: 86.32907
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
     spring: 0
     damper: 0
   m_AngularYLimit:
-    limit: 0
+    limit: 177
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
-    limit: 0
+    limit: 177
     bounciness: 0
     contactDistance: 0
   m_TargetPosition: {x: 0, y: 0, z: 0}
