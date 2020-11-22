@@ -815,7 +815,7 @@ GameObject:
   - component: {fileID: 946790442}
   - component: {fileID: 946790441}
   - component: {fileID: 946790445}
-  - component: {fileID: 946790440}
+  - component: {fileID: 1507677095}
   m_Layer: 0
   m_Name: LeftLowerArm
   m_TagString: Untagged
@@ -882,8 +882,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   priority: 5
   grabPointList: []
---- !u!144 &946790440
-CharacterJoint:
+--- !u!153 &1507677095
+ConfigurableJoint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -891,36 +891,86 @@ CharacterJoint:
   m_GameObject: {fileID: 946790438}
   m_ConnectedBody: {fileID: 1474730995}
   m_Anchor: {x: 0.145, y: 0, z: 0}
-  m_Axis: {x: 0, y: 1, z: 0}
+  m_Axis: {x: 0, y: -1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: -0.15800005, y: -0.00000011920929, z: 0}
   serializedVersion: 2
-  m_SwingAxis: {x: 0, y: 0, z: 1}
-  m_TwistLimitSpring:
-    spring: 1000
+  m_SecondaryAxis: {x: 0, y: 1, z: 0}
+  m_XMotion: 1
+  m_YMotion: 1
+  m_ZMotion: 1
+  m_AngularXMotion: 1
+  m_AngularYMotion: 0
+  m_AngularZMotion: 0
+  m_LinearLimitSpring:
+    spring: 10000
+    damper: 50
+  m_LinearLimit:
+    limit: 0.02
+    bounciness: 0
+    contactDistance: 0
+  m_AngularXLimitSpring:
+    spring: 0
     damper: 0
-  m_LowTwistLimit:
-    limit: -177
+  m_LowAngularXLimit:
+    limit: 1
     bounciness: 0
     contactDistance: 0
-  m_HighTwistLimit:
-    limit: 10
+  m_HighAngularXLimit:
+    limit: 177
     bounciness: 0
     contactDistance: 0
-  m_SwingLimitSpring:
-    spring: 1000
+  m_AngularYZLimitSpring:
+    spring: 0
     damper: 0
-  m_Swing1Limit:
-    limit: 88.6
-    bounciness: 0
-    contactDistance: 0
-  m_Swing2Limit:
+  m_AngularYLimit:
     limit: 0
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_AngularZLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_TargetPosition: {x: 0, y: 0, z: 0}
+  m_TargetVelocity: {x: 0, y: 0, z: 0}
+  m_XDrive:
+    serializedVersion: 3
+    positionSpring: 500
+    positionDamper: 0
+    maximumForce: 100
+  m_YDrive:
+    serializedVersion: 3
+    positionSpring: 500
+    positionDamper: 0
+    maximumForce: 100
+  m_ZDrive:
+    serializedVersion: 3
+    positionSpring: 500
+    positionDamper: 0
+    maximumForce: 100
+  m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
+  m_RotationDriveMode: 0
+  m_AngularXDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_AngularYZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_SlerpDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_ProjectionMode: 0
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
+  m_ConfiguredInWorldSpace: 0
+  m_SwapBodies: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -1271,32 +1321,32 @@ ConfigurableJoint:
   m_AngularYMotion: 1
   m_AngularZMotion: 1
   m_LinearLimitSpring:
-    spring: 0
-    damper: 0
+    spring: 10000
+    damper: 50
   m_LinearLimit:
-    limit: 0
+    limit: 0.02
     bounciness: 0
     contactDistance: 0
   m_AngularXLimitSpring:
     spring: 0
     damper: 0
   m_LowAngularXLimit:
-    limit: 0
+    limit: -30
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 0
+    limit: 90
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
     spring: 0
     damper: 0
   m_AngularYLimit:
-    limit: 0
+    limit: 49.467365
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
-    limit: 0
+    limit: 63.701843
     bounciness: 0
     contactDistance: 0
   m_TargetPosition: {x: 0, y: 0, z: 0}
@@ -1357,7 +1407,7 @@ GameObject:
   - component: {fileID: 1474730997}
   - component: {fileID: 1474730995}
   - component: {fileID: 1474731001}
-  - component: {fileID: 1474730996}
+  - component: {fileID: 1613893887}
   m_Layer: 0
   m_Name: LeftUpperArm
   m_TagString: Untagged
@@ -1424,8 +1474,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   priority: 5
   grabPointList: []
---- !u!144 &1474730996
-CharacterJoint:
+--- !u!153 &1613893887
+ConfigurableJoint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1433,36 +1483,86 @@ CharacterJoint:
   m_GameObject: {fileID: 1474730994}
   m_ConnectedBody: {fileID: 2005655}
   m_Anchor: {x: 0.185, y: 0, z: 0}
-  m_Axis: {x: 0, y: 1, z: 0}
+  m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: -0.64615375, y: 0.40341276, z: 0}
   serializedVersion: 2
-  m_SwingAxis: {x: 0, y: 0, z: 1}
-  m_TwistLimitSpring:
-    spring: 1000
+  m_SecondaryAxis: {x: 0, y: 1, z: 0}
+  m_XMotion: 1
+  m_YMotion: 1
+  m_ZMotion: 1
+  m_AngularXMotion: 2
+  m_AngularYMotion: 2
+  m_AngularZMotion: 2
+  m_LinearLimitSpring:
+    spring: 10000
+    damper: 50
+  m_LinearLimit:
+    limit: 0.02
+    bounciness: 0
+    contactDistance: 0
+  m_AngularXLimitSpring:
+    spring: 0
     damper: 0
-  m_LowTwistLimit:
-    limit: -98.75049
+  m_LowAngularXLimit:
+    limit: 0
     bounciness: 0
     contactDistance: 0
-  m_HighTwistLimit:
-    limit: 92.87645
+  m_HighAngularXLimit:
+    limit: 0
     bounciness: 0
     contactDistance: 0
-  m_SwingLimitSpring:
-    spring: 1000
+  m_AngularYZLimitSpring:
+    spring: 0
     damper: 0
-  m_Swing1Limit:
-    limit: 120
+  m_AngularYLimit:
+    limit: 0
     bounciness: 0
     contactDistance: 0
-  m_Swing2Limit:
-    limit: 120
+  m_AngularZLimit:
+    limit: 0
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_TargetPosition: {x: 0, y: 0, z: 0}
+  m_TargetVelocity: {x: 0, y: 0, z: 0}
+  m_XDrive:
+    serializedVersion: 3
+    positionSpring: 500
+    positionDamper: 0
+    maximumForce: 100
+  m_YDrive:
+    serializedVersion: 3
+    positionSpring: 500
+    positionDamper: 0
+    maximumForce: 100
+  m_ZDrive:
+    serializedVersion: 3
+    positionSpring: 500
+    positionDamper: 0
+    maximumForce: 100
+  m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
+  m_RotationDriveMode: 0
+  m_AngularXDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_AngularYZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_SlerpDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_ProjectionMode: 0
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
+  m_ConfiguredInWorldSpace: 0
+  m_SwapBodies: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -1995,6 +2095,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 19344976852963942}
+  - component: {fileID: 221288728}
   m_Layer: 0
   m_Name: PhysicsModel
   m_TagString: Untagged
@@ -2027,6 +2128,20 @@ Transform:
   m_Father: {fileID: 6715743094101975561}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &221288728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164545359767572391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84ac8831e7c696e4794c922ad511718c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chest: {fileID: 2005651}
+  camera: {fileID: 6718571569536421395}
 --- !u!1 &651467015281086753
 GameObject:
   m_ObjectHideFlags: 0
@@ -2736,7 +2851,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6715026760299067917}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.562, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1107718842}
@@ -3253,12 +3368,12 @@ PrefabInstance:
       value: -23.311089
       objectReference: {fileID: 0}
     - target: {fileID: 1053443800834796961, guid: 3c151d0420aaa2449be095213919acbf, type: 3}
-      propertyPath: m_ConnectedAnchor.z
-      value: -1.8376651e-13
-      objectReference: {fileID: 0}
-    - target: {fileID: 1053443800834796961, guid: 3c151d0420aaa2449be095213919acbf, type: 3}
       propertyPath: m_ConnectedAnchor.y
       value: -1.0144329
+      objectReference: {fileID: 0}
+    - target: {fileID: 1053443800834796961, guid: 3c151d0420aaa2449be095213919acbf, type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: -1.8376651e-13
       objectReference: {fileID: 0}
     - target: {fileID: 1256661428615860281, guid: 3c151d0420aaa2449be095213919acbf, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -3297,6 +3412,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3494470645614953112, guid: 3c151d0420aaa2449be095213919acbf, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3494470645614953112, guid: 3c151d0420aaa2449be095213919acbf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -3309,6 +3428,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3494470645614953112, guid: 3c151d0420aaa2449be095213919acbf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3494470645614953112, guid: 3c151d0420aaa2449be095213919acbf, type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
@@ -3319,14 +3442,6 @@ PrefabInstance:
     - target: {fileID: 3494470645614953112, guid: 3c151d0420aaa2449be095213919acbf, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3494470645614953112, guid: 3c151d0420aaa2449be095213919acbf, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3494470645614953112, guid: 3c151d0420aaa2449be095213919acbf, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3494470645614953112, guid: 3c151d0420aaa2449be095213919acbf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
